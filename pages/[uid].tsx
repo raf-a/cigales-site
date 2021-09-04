@@ -48,9 +48,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
     { pageSize: 100 }
   );
 
-  console.log(docs);
-
-  console.log(docs);
   return {
     paths: docs.results.map((doc) => ({
       params: {

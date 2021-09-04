@@ -1,0 +1,8 @@
+schema:
+  - https://cigales-idf.cdn.prismic.io/graphql:
+      headers:
+        Prismic-Ref: master
+generates:
+  ./types.d.ts:
+    plugins:
+      - typescript

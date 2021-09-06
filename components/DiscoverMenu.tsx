@@ -19,13 +19,14 @@ const DiscoverMenuItem: VFC<any> = ({ title, text, link }) => (
       <style jsx>{`
         a {
           text-decoration: none;
-          color: var(--color-text);
+          color: inherit;
           border: 1px solid var(--color-border);
           border-radius: 12px;
           padding: 6px 12px;
           display: flex;
           flex-direction: column;
           transition: all ease-out 200ms;
+          background-color: rgba(255, 255, 255, 0.5);
         }
         a:hover,
         a:focus {

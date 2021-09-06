@@ -1,5 +1,21 @@
-import React from "react";
+import React, {
+  HTMLProps,
+  FC,
+  useState,
+  VFC,
+  MouseEvent,
+  ReactNode,
+} from "react";
 import Link from "next/link";
+import { Document } from "@prismicio/client/types/documents";
+import { useLockBodyScroll, useMedia, useToggle } from "react-use";
+import DiscoverMenu from "./DiscoverMenu";
+import Footer from "./Footer";
+import { FiChevronDown } from "react-icons/fi";
+import classNames from "classnames";
+import Container from "./Container";
+import PrismicLink from "./PrismicLink";
+import { RichText } from "prismic-reactjs";
 
 const Logo = () => (
   <Link href="/">
@@ -20,38 +36,281 @@ const Logo = () => (
           fill="#74AA50"
         />
       </svg>
+      <style jsx>{`
+        a {
+          line-height: 0;
+        }
+      `}</style>
     </a>
   </Link>
 );
 
-const Header = () => (
+const MenuButton: FC<
+  {
+    caret?: boolean;
+    primary?: boolean;
+    hover?: boolean;
+  } & HTMLProps<HTMLAnchorElement>
+> = ({ caret, primary, hover, children, ...props }) => {
+  return (
+    <>
+      <a {...props} className={classNames(props.className, { hover })}>
+        {children}
+        {caret && (
+          <div className="caret">
+            <FiChevronDown />
+          </div>
+        )}
+      </a>
+      <style jsx>{`
+        a {
+          display: inline-block;
+          margin-left: auto;
+          font-weight: 600;
+          line-height: 1.25rem;
+          padding: 0.75rem 1rem;
+          border-radius: 1.375rem;
+          cursor: pointer;
+          background-color: ${primary ? "var(--color-primary)" : "transparent"};
+          color: ${primary ? "var(--color-bg)" : "var(--color-primary)"};
+        }
+        a:hover,
+        a.hover {
+          text-decoration: none;
+          background-color: ${primary
+            ? "var(--color-text2)"
+            : "var(--color-bg2)"};
+          color: ${primary ? "var(--color-bg)" : "var(--color-primary)"};
+        }
+        .caret {
+          display: inline;
+          vertical-align: middle;
+          margin-left: 0.2em;
+          color: var(--color-secondary);
+          line-height: 0;
+        }
+      `}</style>
+    </>
+  );
+};
+
+const MegaMenu: FC<{ button: ReactNode }> = ({ button, children }) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <MenuButton
+        href="#"
+        onClick={(e) => e.preventDefault()}
+        onMouseEnter={() => setOpen(true)}
+        onMouseLeave={() => setOpen(false)}
+        caret
+        hover={open}
+      >
+        {button}
+      </MenuButton>
+      {open && (
+        <>
+          <div className="overlay"></div>
+          <div
+            className="menu"
+            onMouseEnter={() => setOpen(true)}
+            onMouseLeave={() => setOpen(false)}
+          >
+            <Container>{children}</Container>
+          </div>
+        </>
+      )}
+      <style jsx>{`
+        .overlay {
+          pointer-events: none;
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          z-index: -1;
+          background-color: var(--color-bg2-light);
+          height: 105px;
+        }
+        .menu {
+          position: absolute;
+          left: 0;
+          right: 0;
+          z-index: 1;
+          background-color: var(--color-bg2-light);
+          padding: 60px 0 30px;
+          box-shadow: 0px 25px 25px rgba(0, 0, 0, 0.1);
+        }
+      `}</style>
+    </>
+  );
+};
+
+const DropdownMenu: FC<{ button: ReactNode }> = ({ button, children }) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="root">
+      <MenuButton
+        href="#"
+        onClick={(e) => e.preventDefault()}
+        onMouseEnter={() => setOpen(true)}
+        onMouseLeave={() => setOpen(false)}
+        caret
+        hover={open}
+      >
+        {button}
+      </MenuButton>
+      {open && (
+        <div
+          className="menu"
+          onMouseEnter={() => setOpen(true)}
+          onMouseLeave={() => setOpen(false)}
+        >
+          <div className="menu-content">{children}</div>
+        </div>
+      )}
+      <style jsx>{`
+        .root {
+          display: inline-block;
+        }
+        .menu {
+          position: absolute;
+          z-index: 1;
+          padding-top: 0.25rem;
+        }
+        .menu-content {
+          background-color: var(--color-bg2);
+          border-radius: 1.375rem;
+          padding: 1rem;
+          width: 200px;
+          box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
+        }
+        .menu-content :global(p) {
+          margin: 0;
+        }
+        .menu-content :global(p + p) {
+          margin-top: 1rem;
+        }
+      `}</style>
+    </div>
+  );
+};
+
+const HeaderLayout: FC = ({ children }) => (
   <header>
-    <Logo />
-    <button>Menu</button>
+    <div className="logo">
+      <Logo />
+    </div>
+    {children}
     <style jsx>{`
       header {
-        padding: 14px 24px;
-        display: flex;
+        padding: 15px 20px;
+        display: grid;
+        grid-template-columns: 1fr auto;
         align-items: flex-start;
+        justify-items: flex-end;
       }
-      button,
-      .button {
-        margin-left: auto;
-        background-color: var(--color-primary);
-        border: none;
-        color: var(--color-bg);
-        font-weight: 600;
-        line-height: 1rem;
-        padding: 0.75rem 1rem;
-        border-radius: 2rem;
-        cursor: pointer;
+      .logo {
+        justify-self: flex-start;
+        z-index: 2;
       }
-      button:hover,
-      .button:hover {
-        opacity: 0.8;
+      @media (min-width: 1024px) {
+        header {
+          grid-template-columns: 1fr auto 1fr;
+        }
       }
     `}</style>
   </header>
 );
+
+const Header: VFC<{ homepageDoc: Document }> = ({ homepageDoc }) => {
+  const isDesktop = useMedia("(min-width: 1024px)");
+  const [mobileMenu, setMobileMenu] = useState<boolean>(false);
+  useLockBodyScroll(mobileMenu);
+
+  const MobileMenuButton = () => (
+    <MenuButton href="#" onClick={() => setMobileMenu(!mobileMenu)} primary>
+      Menu
+    </MenuButton>
+  );
+
+  if (mobileMenu) {
+    return (
+      <div className="root">
+        <HeaderLayout>
+          <MobileMenuButton />
+        </HeaderLayout>
+        <div className="content">
+          <DiscoverMenu homepageDoc={homepageDoc} />
+          <Footer homepageDoc={homepageDoc} />
+        </div>
+        <style jsx>{`
+          .root {
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: var(--color-bg2);
+            color: var(--color-text2);
+          }
+          .content {
+            padding: 15px 20px;
+            grid-template-columns: 1fr;
+            display: grid;
+            row-gap: 30px;
+          }
+        `}</style>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <HeaderLayout>
+        {isDesktop ? (
+          <>
+            <div>
+              <DropdownMenu button="Découvrir">
+                {homepageDoc.data.discover_menu
+                  .concat(homepageDoc.data.discover_menu_extra)
+                  .map((item: any, i: number) => (
+                    <p key={i}>
+                      <PrismicLink link={item.link}>
+                        <a>{RichText.asText(item.title)}</a>
+                      </PrismicLink>
+                    </p>
+                  ))}
+              </DropdownMenu>
+              <DropdownMenu button="Ressources">
+                {homepageDoc.data.resources_menu.map((item: any, i: number) => (
+                  <p key={i}>
+                    <PrismicLink link={item.link}>
+                      <a>{RichText.asText(item.title)}</a>
+                    </PrismicLink>
+                  </p>
+                ))}
+              </DropdownMenu>
+              <Link href="/contact" passHref>
+                <MenuButton>Contact</MenuButton>
+              </Link>
+            </div>
+            <div>
+              <MenuButton href="https://bap.cigales-idf.asso.fr" primary>
+                Espace membres
+              </MenuButton>
+            </div>
+          </>
+        ) : (
+          <MobileMenuButton />
+        )}
+      </HeaderLayout>
+      {mobileMenu}
+    </>
+  );
+};
 
 export default Header;

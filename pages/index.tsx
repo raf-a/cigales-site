@@ -15,7 +15,7 @@ type HomeProps = {
 
 const Home: NextPage<HomeProps> = ({ doc }) => {
   return (
-    <Layout homeDoc={doc}>
+    <Layout homepageDoc={doc}>
       <div className="root">
         <Container>
           <div className="hero">

@@ -14,7 +14,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         :root {
           --color-bg: #fff;
           --color-bg2: #fff7e8;
+          --color-bg2-light: hsl(39, 100%, 98%);
           --color-text: #0a2925;
+          --color-text2: #1a665b;
           --color-primary: #279989;
           --color-secondary: #74aa50;
           --color-border: rgba(0, 0, 0, 0.08);

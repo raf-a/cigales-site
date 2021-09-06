@@ -4,6 +4,7 @@ import DiscoverMenu from "components/DiscoverMenu";
 import Layout from "components/Layout";
 import PrismicImage from "components/PrismicImage";
 import PrismicRichText from "components/PrismicRichText";
+import SliceZone from "components/SlizeZone";
 import Wave from "components/Wave";
 import type { GetStaticProps, NextPage } from "next";
 import { RichText } from "prismic-reactjs";
@@ -40,6 +41,8 @@ const Home: NextPage<HomeProps> = ({ doc }) => {
           </Container>
           <Wave bottom />
         </div>
+
+        <SliceZone sliceZone={doc.data.body} />
 
         <style jsx>{`
           .hero {

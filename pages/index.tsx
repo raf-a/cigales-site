@@ -4,6 +4,7 @@ import DiscoverMenu from "components/DiscoverMenu";
 import Layout from "components/Layout";
 import PrismicImage from "components/PrismicImage";
 import PrismicRichText from "components/PrismicRichText";
+import Wave from "components/Wave";
 import type { GetStaticProps, NextPage } from "next";
 import { RichText } from "prismic-reactjs";
 import React from "react";
@@ -26,38 +27,47 @@ const Home: NextPage<HomeProps> = ({ doc }) => {
             <PrismicImage render={doc.data.image} />
           </div>
         </Container>
-        <Container padding>
-          <DiscoverMenu homepageDoc={doc} />
-          <div className="discover-footer">
-            <PrismicRichText render={doc.data.discover_footer} />
-          </div>
-        </Container>
+
+        <div className="discover">
+          <Wave />
+          <Container colored>
+            <div className="discover-menu">
+              <DiscoverMenu homepageDoc={doc} />
+            </div>
+            <div className="discover-footer">
+              <PrismicRichText render={doc.data.discover_footer} />
+            </div>
+          </Container>
+          <Wave bottom />
+        </div>
+
         <style jsx>{`
-          .root {
-            display: grid;
-            column-gap: 20rem;
-          }
           .hero {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             column-gap: 30px;
             align-items: center;
           }
-          .hero-content {
-            color: #279989;
-          }
           .hero-content h1 {
             font-weight: 900;
             font-size: 2.5rem;
+            color: var(--color-secondary);
           }
           .hero-content p {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             line-height: 1.5;
-            font-weight: 600;
+            font-weight: 500;
+          }
+          .discover {
+            padding-top: 6rem;
+          }
+          .discover-menu {
+            transform: translateY(-6rem);
           }
           .discover-footer {
+            margin-top: -5rem;
+            padding-bottom: 1rem;
             text-align: center;
-            margin-top: 2rem;
           }
         `}</style>
       </div>

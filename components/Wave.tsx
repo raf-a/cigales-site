@@ -1,6 +1,6 @@
-import React from "react";
+import React, { VFC } from "react";
 
-const Wave = () => (
+const Wave: VFC<{ bottom?: boolean }> = (props) => (
   <div>
     <svg
       viewBox="0 0 1440 48"
@@ -18,6 +18,9 @@ const Wave = () => (
       div {
         line-height: 0;
         display: block;
+        transform: rotate(${props.bottom ? "180deg" : "0"});
+        z-index: -1;
+        position: relative;
       }
     `}</style>
   </div>

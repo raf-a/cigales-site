@@ -26,7 +26,7 @@ const DiscoverMenuItem: VFC<any> = ({ title, text, link }) => (
           display: flex;
           flex-direction: column;
           transition: all ease-out 200ms;
-          background-color: rgba(255, 255, 255, 0.5);
+          background-color: var(--color-bg)
         }
         a:hover,
         a:focus {

@@ -16,7 +16,16 @@ const customLink = (
 );
 
 const PrismicRichText: VFC<{ render: any }> = (props) => (
-  <RichText {...props} serializeHyperlink={customLink} />
+  <div>
+    <RichText {...props} serializeHyperlink={customLink} />
+    <style jsx>{`
+      div :global(h2) {
+        font-size: 1.125em;
+        color: var(--color-secondary);
+        margin: 1em 0;
+      }
+    `}</style>
+  </div>
 );
 
 export default PrismicRichText;

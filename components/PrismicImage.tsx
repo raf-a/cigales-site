@@ -3,15 +3,19 @@ import Image from "next/image";
 
 type PrismicImageProps = {
   render: any;
+  layout?: "fixed" | "fill" | "intrinsic" | "responsive";
 };
 
-const PrismicImage: VFC<PrismicImageProps> = ({ render }) => (
+const PrismicImage: VFC<PrismicImageProps> = ({
+  render,
+  layout = "intrinsic",
+}) => (
   <Image
     src={render.url}
     alt={render.alt}
     width={render.dimensions.width}
     height={render.dimensions.height}
-    layout="responsive"
+    layout={layout}
   />
 );
 

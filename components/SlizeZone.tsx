@@ -1,13 +1,11 @@
 import React, { ComponentType, VFC } from "react";
 import Content from "./slices/Content";
-import Image from "./slices/Image";
 import Numbers from "./slices/Numbers";
 import QuoteList from "./slices/QuoteList";
 import { SliceProps } from "./slices/SliceProps";
 
 const slices: Record<string, ComponentType<SliceProps>> = {
   content: Content,
-  image: Image,
   numbers: Numbers,
   quote_list: QuoteList,
 };

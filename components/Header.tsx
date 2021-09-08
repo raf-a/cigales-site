@@ -16,6 +16,7 @@ import classNames from "classnames";
 import Container from "./Container";
 import PrismicLink from "./PrismicLink";
 import { RichText } from "prismic-reactjs";
+import Menu from "./Menu";
 
 const Logo = () => (
   <Link href="/">
@@ -167,7 +168,9 @@ const DropdownMenu: FC<{ button: ReactNode }> = ({ button, children }) => {
           onMouseEnter={() => setOpen(true)}
           onMouseLeave={() => setOpen(false)}
         >
-          <div className="menu-content">{children}</div>
+          <div className="menu-content" onClick={() => setOpen(false)}>
+            {children}
+          </div>
         </div>
       )}
       <style jsx>{`
@@ -183,7 +186,7 @@ const DropdownMenu: FC<{ button: ReactNode }> = ({ button, children }) => {
           background-color: var(--color-bg2);
           border-radius: 1.375rem;
           padding: 1rem;
-          width: 200px;
+          width: 25ch;
           box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
         }
         .menu-content :global(p) {
@@ -275,24 +278,14 @@ const Header: VFC<{ homepageDoc: Document }> = ({ homepageDoc }) => {
           <>
             <div>
               <DropdownMenu button="Découvrir">
-                {homepageDoc.data.discover_menu
-                  .concat(homepageDoc.data.discover_menu_extra)
-                  .map((item: any, i: number) => (
-                    <p key={i}>
-                      <PrismicLink link={item.link}>
-                        <a>{RichText.asText(item.title)}</a>
-                      </PrismicLink>
-                    </p>
-                  ))}
+                <Menu
+                  items={homepageDoc.data.discover_menu.concat(
+                    homepageDoc.data.discover_menu_extra
+                  )}
+                />
               </DropdownMenu>
               <DropdownMenu button="Ressources">
-                {homepageDoc.data.resources_menu.map((item: any, i: number) => (
-                  <p key={i}>
-                    <PrismicLink link={item.link}>
-                      <a>{RichText.asText(item.title)}</a>
-                    </PrismicLink>
-                  </p>
-                ))}
+                <Menu items={homepageDoc.data.resources_menu} />
               </DropdownMenu>
               <Link href="/contact" passHref>
                 <MenuButton>Contact</MenuButton>

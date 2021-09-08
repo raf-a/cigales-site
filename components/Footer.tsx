@@ -1,32 +1,21 @@
 import { Document } from "@prismicio/client/types/documents";
-import { RichText } from "prismic-reactjs";
 import React, { VFC } from "react";
-import PrismicLink from "./PrismicLink";
+import Menu from "./Menu";
 import PrismicRichText from "./PrismicRichText";
 
 const Footer: VFC<{ homepageDoc: Document }> = ({ homepageDoc }) => (
   <footer>
     <div>
       <h2>Découvrir</h2>
-      {homepageDoc.data.discover_menu
-        .concat(homepageDoc.data.discover_menu_extra)
-        .map((item: any, i: number) => (
-          <p key={i}>
-            <PrismicLink link={item.link}>
-              <a>{RichText.asText(item.title)}</a>
-            </PrismicLink>
-          </p>
-        ))}
+      <Menu
+        items={homepageDoc.data.discover_menu.concat(
+          homepageDoc.data.discover_menu_extra
+        )}
+      />
     </div>
     <div>
       <h2>Ressources</h2>
-      {homepageDoc.data.resources_menu.map((item: any, i: number) => (
-        <p key={i}>
-          <PrismicLink link={item.link}>
-            <a>{RichText.asText(item.title)}</a>
-          </PrismicLink>
-        </p>
-      ))}
+      <Menu items={homepageDoc.data.resources_menu} />
     </div>
     <div className="contact">
       <h2>Contact</h2>
@@ -43,6 +32,9 @@ const Footer: VFC<{ homepageDoc: Document }> = ({ homepageDoc }) => (
       footer h2 {
         margin: 0 0 1.5rem;
         font-size: 1rem;
+        display: inline-block;
+        border-bottom: 2px solid;
+        padding-bottom: 0.5em;
       }
       footer :global(a) {
         color: var(--color-text2);

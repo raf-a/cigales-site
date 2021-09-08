@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import Container from "components/Container";
 import Heading from "components/Heading";
 import PrismicImage from "components/PrismicImage";
@@ -14,17 +15,17 @@ const Content: VFC<SliceProps> = ({ slice }) => (
     )}
 
     <div className="items">
-      {slice.items.map((item: any, i: number) => {
+      {slice.items.map(({ wide, image, content }: any, i: number) => {
         return (
-          <div key={i} className="item">
-            {item.image.url && (
+          <div key={i} className={classNames("item", { wide })}>
+            {image.url && (
               <div className="image">
-                <PrismicImage render={item.image} />
+                <PrismicImage render={image} />
               </div>
             )}
-            {item.content.length > 0 && (
+            {content.length > 0 && (
               <div className="content">
-                <PrismicRichText render={item.content} />
+                <PrismicRichText render={content} />
               </div>
             )}
           </div>
@@ -36,22 +37,16 @@ const Content: VFC<SliceProps> = ({ slice }) => (
         margin-bottom: 2rem;
       }
       .items {
-        margin-bottom: -2rem;
-      }
-      .item {
-        margin-bottom: 2rem;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
       }
       @media (min-width: 1024px) {
         .items {
-          display: flex;
-          flex-wrap: wrap;
-          margin: -1rem;
+          grid-template-columns: 1fr 1fr;
         }
-        .item {
-          box-sizing: border-box;
-          width: 50%;
-          padding: 1rem;
-          margin: 0;
+        .item.wide {
+          grid-column: span 2;
         }
       }
     `}</style>

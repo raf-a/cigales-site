@@ -5,7 +5,9 @@ import Footer from "./Footer";
 import Header from "./Header";
 import Wave from "./Wave";
 
-const Layout: FC<{ homepageDoc: Document }> = ({ children, homepageDoc }) => (
+const Layout: FC<{
+  homepageDoc: Document;
+}> = ({ children, homepageDoc }) => (
   <>
     <Header homepageDoc={homepageDoc} />
     {children}

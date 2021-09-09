@@ -11,6 +11,7 @@ import { RichText } from "prismic-reactjs";
 import PageHeader from "components/PageHeader";
 import BlogPostItem from "components/BlogPostItem";
 import PrismicImage from "components/PrismicImage";
+import SEO from "components/SEO";
 
 type BlogIndexProps = {
   homepageDoc: Document;
@@ -25,6 +26,11 @@ const BlogIndex: VFC<BlogIndexProps> = ({
 }) => {
   return (
     <Layout homepageDoc={homepageDoc}>
+      <SEO
+        title={RichText.asText(blogDoc.data.title)}
+        description={RichText.asText(blogDoc.data.description)}
+        siteName={RichText.asText(homepageDoc.data.site_name)}
+      />
       <PageHeader
         title={RichText.asText(blogDoc.data.title)}
         body={<PrismicRichText render={blogDoc.data.description} />}

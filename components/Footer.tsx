@@ -7,11 +7,7 @@ const Footer: VFC<{ homepageDoc: Document }> = ({ homepageDoc }) => (
   <footer>
     <div>
       <h2>Découvrir</h2>
-      <Menu
-        items={homepageDoc.data.discover_menu.concat(
-          homepageDoc.data.discover_menu_extra
-        )}
-      />
+      <Menu items={homepageDoc.data.discover_menu} />
     </div>
     <div>
       <h2>Ressources</h2>

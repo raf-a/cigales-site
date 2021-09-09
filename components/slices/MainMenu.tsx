@@ -1,18 +1,20 @@
-import { Document } from "@prismicio/client/types/documents";
-import { RichText } from "prismic-reactjs";
-import React, { VFC } from "react";
-import PrismicLink from "./PrismicLink";
+import Container from "components/Container";
+import Wave from "components/Wave";
+import React, { ReactNode, VFC } from "react";
+import Link from "next/link";
 import { FiArrowRight } from "react-icons/fi";
 
-type DiscoverMenuProps = {
-  homepageDoc: Document;
+type ItemProps = {
+  title: ReactNode;
+  description: ReactNode;
+  href: string;
 };
 
-const DiscoverMenuItem: VFC<any> = ({ title, text, link }) => (
-  <PrismicLink link={link}>
+const Item: VFC<ItemProps> = ({ title, description, href }) => (
+  <Link href={href}>
     <a>
-      <h2>{RichText.asText(title)}</h2>
-      <p>{RichText.asText(text)}</p>
+      <h2>{title}</h2>
+      <p>{description}</p>
       <div className="icon">
         <FiArrowRight />
       </div>
@@ -26,7 +28,7 @@ const DiscoverMenuItem: VFC<any> = ({ title, text, link }) => (
           display: flex;
           flex-direction: column;
           transition: all ease-out 200ms;
-          background-color: var(--color-bg)
+          background-color: var(--color-bg);
         }
         a:hover,
         a:focus {
@@ -51,33 +53,54 @@ const DiscoverMenuItem: VFC<any> = ({ title, text, link }) => (
         }
       `}</style>
     </a>
-  </PrismicLink>
+  </Link>
 );
 
-const DiscoverMenu: VFC<DiscoverMenuProps> = ({ homepageDoc }) => (
-  <div className="discover-menu">
-    {homepageDoc.data.discover_menu.map((item: any, i: number) => (
-      <DiscoverMenuItem key={i} {...item} />
-    ))}
+type MainMenuProps = {
+  footer: ReactNode;
+  items: ItemProps[];
+};
+
+const MainMenu: VFC<MainMenuProps> = ({ footer, items }) => (
+  <nav>
+    <Wave />
+    <Container colored>
+      <div className="menu">
+        {items.map((item, i) => (
+          <Item key={i} {...item} />
+        ))}
+      </div>
+      {footer && <footer>{footer}</footer>}
+    </Container>
+    <Wave bottom />
     <style jsx>{`
-      .discover-menu {
+      nav {
+        padding-top: 6rem;
+      }
+      .menu {
+        transform: translateY(-6rem);
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: repeat(auto-fit, 1fr);
         gap: 1rem;
       }
+      footer {
+        margin-top: -5rem;
+        padding-bottom: 1rem;
+        text-align: center;
+      }
       @media (min-width: 425px) {
-        .discover-menu {
+        .menu {
           grid-template-columns: repeat(2, 1fr);
         }
       }
       @media (min-width: 1024px) {
-        .discover-menu {
+        .menu {
           grid-template-columns: repeat(4, 1fr);
         }
       }
     `}</style>
-  </div>
+  </nav>
 );
 
-export default DiscoverMenu;
+export default MainMenu;

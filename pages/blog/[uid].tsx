@@ -1,6 +1,6 @@
 import { Document } from "@prismicio/client/types/documents";
 import { GetStaticPaths, GetStaticProps } from "next";
-import { VFC } from "react";
+import React, { VFC } from "react";
 import { createClient } from "utils/prismic";
 import Prismic from "@prismicio/client";
 import Layout from "components/Layout";
@@ -9,6 +9,7 @@ import { RichText } from "prismic-reactjs";
 import PageHeader from "components/PageHeader";
 import PrismicImage from "components/PrismicImage";
 import PrismicRichText from "components/PrismicRichText";
+import SEO from "components/SEO";
 
 type BlogPostType = {
   homepageDoc: Document;
@@ -17,6 +18,11 @@ type BlogPostType = {
 
 const BlogPost: VFC<BlogPostType> = ({ homepageDoc, blogPostDoc }) => (
   <Layout homepageDoc={homepageDoc}>
+    <SEO
+      title={RichText.asText(blogPostDoc.data.title)}
+      description={RichText.asText(blogPostDoc.data.chapo)}
+      siteName={RichText.asText(homepageDoc.data.site_name)}
+    />
     <PageHeader
       title={RichText.asText(blogPostDoc.data.title)}
       body={

@@ -1,16 +1,12 @@
 import React from "react";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
-import { createClient, linkResolver } from "utils/prismic";
+import { createClient, getByUID, getHomepage } from "utils/prismic";
 import Prismic from "@prismicio/client";
 import { Document } from "@prismicio/client/types/documents";
-import { RichText } from "prismic-reactjs";
 import Layout from "components/Layout";
-import Container from "components/Container";
-import PrismicImage from "components/PrismicImage";
-import PrismicRichText from "components/PrismicRichText";
-import Cigales from "components/Cigales";
 import SliceZone from "components/SlizeZone";
-import PageHeader from "components/PageHeader";
+import { RichText } from "prismic-reactjs";
+import SEO from "components/SEO";
 
 type PageProps = {
   pageDoc: Document;
@@ -23,15 +19,10 @@ type PageQuery = {
 
 const Page: NextPage<PageProps> = ({ pageDoc, homepageDoc }) => (
   <Layout homepageDoc={homepageDoc}>
-    <PageHeader
-      image={
-        <>
-          <PrismicImage render={pageDoc.data.image} />
-          <Cigales name={pageDoc.data.image_club} />
-        </>
-      }
-      title={RichText.asText(pageDoc.data.title)}
-      body={<PrismicRichText render={pageDoc.data.main_body} />}
+    <SEO
+      title={RichText.asText(pageDoc.data.meta_title)}
+      description={RichText.asText(pageDoc.data.meta_description)}
+      siteName={RichText.asText(homepageDoc.data.site_name)}
     />
     <SliceZone sliceZone={pageDoc.data.body} />
   </Layout>
@@ -45,15 +36,8 @@ export const getStaticProps: GetStaticProps<PageProps, PageQuery> = async ({
 }) => {
   if (!params) throw new Error("Error");
 
-  const client = createClient();
-
-  const pageDoc = await client.getByUID(
-    "page",
-    params.uid,
-    typeof previewData === "string" ? { ref: previewData } : {}
-  );
-
-  const homepageDoc = await client.getSingle("homepage", {});
+  const pageDoc = await getByUID("page", params.uid, previewData);
+  const homepageDoc = await getHomepage(previewData);
 
   return {
     props: { pageDoc, homepageDoc },

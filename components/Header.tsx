@@ -1,21 +1,11 @@
-import React, {
-  HTMLProps,
-  FC,
-  useState,
-  VFC,
-  MouseEvent,
-  ReactNode,
-} from "react";
+import React, { HTMLProps, FC, useState, VFC, ReactNode } from "react";
 import Link from "next/link";
 import { Document } from "@prismicio/client/types/documents";
 import { useLockBodyScroll, useMedia, useToggle } from "react-use";
-import DiscoverMenu from "./DiscoverMenu";
 import Footer from "./Footer";
 import { FiChevronDown } from "react-icons/fi";
 import classNames from "classnames";
 import Container from "./Container";
-import PrismicLink from "./PrismicLink";
-import { RichText } from "prismic-reactjs";
 import Menu from "./Menu";
 
 const Logo = () => (
@@ -245,7 +235,6 @@ const Header: VFC<{ homepageDoc: Document }> = ({ homepageDoc }) => {
           <MobileMenuButton />
         </HeaderLayout>
         <div className="content">
-          <DiscoverMenu homepageDoc={homepageDoc} />
           <Footer homepageDoc={homepageDoc} />
         </div>
         <style jsx>{`
@@ -278,11 +267,7 @@ const Header: VFC<{ homepageDoc: Document }> = ({ homepageDoc }) => {
           <>
             <div>
               <DropdownMenu button="Découvrir">
-                <Menu
-                  items={homepageDoc.data.discover_menu.concat(
-                    homepageDoc.data.discover_menu_extra
-                  )}
-                />
+                <Menu items={homepageDoc.data.discover_menu} />
               </DropdownMenu>
               <DropdownMenu button="Ressources">
                 <Menu items={homepageDoc.data.resources_menu} />

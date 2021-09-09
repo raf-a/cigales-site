@@ -19,7 +19,12 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <meta charSet="utf-8" />
-          <link rel="icon" href="/favicon.png" type="image/png" />
+          <link href="favicon.ico" rel="shortcut icon" />
+          <link
+            href="apple-touch-icon-180x180.png"
+            rel="apple-touch-icon"
+            sizes="180x180"
+          />
         </Head>
 
         <body>

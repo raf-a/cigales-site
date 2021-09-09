@@ -31,9 +31,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         }
         a {
           color: var(--color-primary);
-        }
-        a:not(:hover) {
           text-decoration: none;
+        }
+        a:hover {
+          text-decoration: underline;
         }
       `}</style>
       <Component {...pageProps} />

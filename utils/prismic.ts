@@ -13,12 +13,24 @@ export const linkResolver = (doc: Document) => {
   if (doc.type === "page") {
     return `/${doc.uid}`;
   }
+  if (doc.type === "blog") {
+    return "/blog";
+  }
+  if (doc.type === "blog_post") {
+    return `/blog/${doc.uid}`;
+  }
   return "/";
 };
 
 export const hrefResolver = (doc: Document) => {
   if (doc.type === "page") {
     return "/[uid]";
+  }
+  if (doc.type === "blog") {
+    return "/blog";
+  }
+  if (doc.type === "blog_post") {
+    return "/blog/[uid]";
   }
   return "/";
 };

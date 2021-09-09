@@ -9,14 +9,17 @@ type PrismicImageProps = {
 const PrismicImage: VFC<PrismicImageProps> = ({
   render,
   layout = "intrinsic",
-}) => (
-  <Image
-    src={render.url}
-    alt={render.alt}
-    width={render.dimensions.width}
-    height={render.dimensions.height}
-    layout={layout}
-  />
-);
+}) => {
+  if (!render.url) return null;
+  return (
+    <Image
+      src={render.url}
+      alt={render.alt}
+      width={render.dimensions.width}
+      height={render.dimensions.height}
+      layout={layout}
+    />
+  );
+};
 
 export default PrismicImage;

@@ -19,6 +19,9 @@ const PrismicRichText: VFC<{ render: any }> = (props) => (
   <div>
     <RichText {...props} serializeHyperlink={customLink} />
     <style jsx>{`
+      div {
+        line-height: 1.5;
+      }
       div :global(h1) {
         font-size: 1.5em;
       }
@@ -26,9 +29,6 @@ const PrismicRichText: VFC<{ render: any }> = (props) => (
         font-size: 1.125em;
         color: var(--color-secondary);
         margin: 1em 0;
-      }
-      div :global(p) {
-        line-height: 1.5;
       }
     `}</style>
   </div>

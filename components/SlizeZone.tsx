@@ -28,7 +28,7 @@ const slices: Record<string, ComponentType<SliceProps>> = {
 
 const SliceZone: VFC<{ sliceZone: any }> = ({ sliceZone }) => {
   return (
-    <div className="container">
+    <div>
       {sliceZone.map((slice: any, key: number) => {
         const Slice = slices[slice.slice_type];
         if (!Slice) {
@@ -43,7 +43,7 @@ const SliceZone: VFC<{ sliceZone: any }> = ({ sliceZone }) => {
         );
       })}
       <style jsx>{`
-        .slice {
+        .slice + .slice {
           margin: 8rem 0;
         }
       `}</style>

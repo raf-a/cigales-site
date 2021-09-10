@@ -75,7 +75,7 @@ const MainMenu: VFC<MainMenuProps> = ({ footer, items }) => (
     <Wave bottom />
     <style jsx>{`
       nav {
-        padding-top: 6rem;
+        padding-top: 2rem;
       }
       .menu {
         transform: translateY(-6rem);

@@ -1,5 +1,5 @@
 import React, { ReactNode, VFC } from "react";
-import Container from "../Container";
+import Container from "./Container";
 
 type HeroProps = {
   title: ReactNode;

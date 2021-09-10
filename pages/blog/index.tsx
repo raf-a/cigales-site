@@ -12,6 +12,7 @@ import PageHeader from "components/PageHeader";
 import BlogPostItem from "components/BlogPostItem";
 import PrismicImage from "components/PrismicImage";
 import SEO from "components/SEO";
+import BlogPostList from "components/BlogPostList";
 
 type BlogIndexProps = {
   homepageDoc: Document;
@@ -36,28 +37,8 @@ const BlogIndex: VFC<BlogIndexProps> = ({
         body={<PrismicRichText render={blogDoc.data.description} />}
       />
       <Container>
-        <section className="blog-posts">
-          {blogPosts.results.map((blogPostDoc) => (
-            <div key={blogPostDoc.id}>
-              <BlogPostItem
-                href={linkResolver(blogPostDoc)}
-                title={RichText.asText(blogPostDoc.data.title)}
-                chapo={RichText.asText(blogPostDoc.data.chapo)}
-                image={<PrismicImage render={blogPostDoc.data.image} />}
-              />
-            </div>
-          ))}
-        </section>
+        <BlogPostList blogPosts={blogPosts.results} />
       </Container>
-      <style jsx>{`
-        .blog-posts {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(30ch, 1fr));
-          gap: 3rem;
-          margin: 2rem 0;
-          position: relative;
-        }
-      `}</style>
     </Layout>
   );
 };

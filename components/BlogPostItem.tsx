@@ -1,20 +1,21 @@
+import { Document } from "@prismicio/client/types/documents";
 import Link from "next/link";
+import { RichText } from "prismic-reactjs";
 import React, { ReactNode, VFC } from "react";
 import { FiArrowRight } from "react-icons/fi";
+import { linkResolver } from "utils/prismic";
+import PrismicImage from "./PrismicImage";
 
-type BlogPostItemProps = {
-  href: string;
-  title: ReactNode;
-  chapo: ReactNode;
-  image?: ReactNode;
+export type BlogPostItemProps = {
+  blogPost: Document;
 };
 
-const BlogPostItem: VFC<BlogPostItemProps> = ({
-  href,
-  title,
-  chapo,
-  image,
-}) => {
+const BlogPostItem: VFC<BlogPostItemProps> = ({ blogPost }) => {
+  const image = <PrismicImage render={blogPost.data.image} />;
+  const title = RichText.asText(blogPost.data.title);
+  const chapo = RichText.asText(blogPost.data.chapo);
+  const href = linkResolver(blogPost);
+
   return (
     <article>
       {image && <div className="image">{image}</div>}

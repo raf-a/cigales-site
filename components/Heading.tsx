@@ -1,6 +1,5 @@
 import { RichText } from "prismic-reactjs";
 import React, { FC } from "react";
-import Container from "./Container";
 
 type HeadingProps = {
   title: any;

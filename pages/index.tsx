@@ -5,7 +5,7 @@ import SliceZone from "components/SlizeZone";
 import type { GetStaticProps, NextPage } from "next";
 import { RichText } from "prismic-reactjs";
 import React from "react";
-import { getHomepage } from "utils/prismic";
+import { getHomepage, getLatestBlogPosts } from "utils/prismic";
 
 type HomeProps = {
   doc: Document;

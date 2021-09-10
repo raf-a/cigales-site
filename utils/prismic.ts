@@ -48,13 +48,44 @@ export const createClient = (req: any = null) =>
 const buildOptions = (previewData: PreviewData): QueryOptions =>
   typeof previewData === "string" ? { ref: previewData } : {};
 
+const completeSlices = async (doc: Document) => {
+  let latestBlogPostSlices: any[] = [];
+
+  for (const field in doc.data) {
+    const value = doc.data[field];
+    if (Array.isArray(value)) {
+      for (const slice of value) {
+        if (slice.slice_type === "latest_blog_posts") {
+          latestBlogPostSlices.push(slice);
+        }
+      }
+    }
+  }
+
+  if (latestBlogPostSlices.length > 0) {
+    const blogPosts = await getLatestBlogPosts(3);
+    latestBlogPostSlices.forEach((slice) => {
+      slice.blogPosts = blogPosts.results;
+    });
+  }
+
+  return doc;
+};
+
 export const getHomepage = async (previewData?: PreviewData) =>
-  await client.getSingle("homepage", buildOptions(previewData));
+  completeSlices(await client.getSingle("homepage", buildOptions(previewData)));
 
 export const getByUID = async (
   type: string,
   uid: string,
   previewData: PreviewData
-) => await client.getByUID(type, uid, buildOptions(previewData));
+) =>
+  completeSlices(await client.getByUID(type, uid, buildOptions(previewData)));
+
+export const getLatestBlogPosts = async (pageSize = 15) =>
+  await client.query(Prismic.Predicates.at("document.type", "blog_post"), {
+    orderings: "[document.first_publication_date]",
+    pageSize,
+  });
 
 export const getLinkUrl = (link: any) => Link.url(link, linkResolver);

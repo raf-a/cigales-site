@@ -1,7 +1,6 @@
 import { Document } from "@prismicio/client/types/documents";
 import Layout from "components/Layout";
 import MainContent from "components/MainContent";
-import PageHeader from "components/PageHeader";
 import { GetStaticProps, NextPage } from "next";
 import { getHomepage } from "utils/prismic";
 

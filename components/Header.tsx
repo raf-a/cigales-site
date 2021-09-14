@@ -1,7 +1,7 @@
 import React, { HTMLProps, FC, useState, VFC, ReactNode } from "react";
 import Link from "next/link";
 import { Document } from "@prismicio/client/types/documents";
-import { useLockBodyScroll, useMedia, useToggle } from "react-use";
+import { useLockBodyScroll } from "react-use";
 import Footer from "./Footer";
 import { FiChevronDown } from "react-icons/fi";
 import classNames from "classnames";
@@ -218,7 +218,6 @@ const HeaderLayout: FC = ({ children }) => (
 );
 
 const Header: VFC<{ homepageDoc: Document }> = ({ homepageDoc }) => {
-  const isDesktop = useMedia("(min-width: 1024px)");
   const [mobileMenu, setMobileMenu] = useState<boolean>(false);
   useLockBodyScroll(mobileMenu);
 
@@ -239,12 +238,12 @@ const Header: VFC<{ homepageDoc: Document }> = ({ homepageDoc }) => {
         </div>
         <style jsx>{`
           .root {
-            position: fixed;
+            position: absolute;
             z-index: 1;
             left: 0;
             top: 0;
-            width: 100%;
-            height: 100%;
+            right: 0;
+            bottom: 0;
             overflow: auto;
             background-color: var(--color-bg2);
             color: var(--color-text2);
@@ -263,30 +262,40 @@ const Header: VFC<{ homepageDoc: Document }> = ({ homepageDoc }) => {
   return (
     <>
       <HeaderLayout>
-        {isDesktop ? (
-          <>
-            <div>
-              <DropdownMenu button="Découvrir">
-                <Menu items={homepageDoc.data.discover_menu} />
-              </DropdownMenu>
-              <DropdownMenu button="Ressources">
-                <Menu items={homepageDoc.data.resources_menu} />
-              </DropdownMenu>
-              <Link href="/contact" passHref>
-                <MenuButton>Contact</MenuButton>
-              </Link>
-            </div>
-            <div>
-              <MenuButton href="https://bap.cigales-idf.asso.fr" primary>
-                Espace membres
-              </MenuButton>
-            </div>
-          </>
-        ) : (
+        <div className="desktop">
+          <DropdownMenu button="Découvrir">
+            <Menu items={homepageDoc.data.discover_menu} />
+          </DropdownMenu>
+          <DropdownMenu button="Ressources">
+            <Menu items={homepageDoc.data.resources_menu} />
+          </DropdownMenu>
+          <Link href="/contact" passHref>
+            <MenuButton>Contact</MenuButton>
+          </Link>
+        </div>
+        <div className="desktop">
+          <MenuButton href="https://bap.cigales-idf.asso.fr" primary>
+            Espace membres
+          </MenuButton>
+        </div>
+        <div className="mobile">
           <MobileMenuButton />
-        )}
+        </div>
       </HeaderLayout>
       {mobileMenu}
+      <style jsx>{`
+        .desktop {
+          display: none;
+        }
+        @media (min-width: 1024px) {
+          .desktop {
+            display: block;
+          }
+          .mobile {
+            display: none;
+          }
+        }
+      `}</style>
     </>
   );
 };

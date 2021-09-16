@@ -15,10 +15,12 @@ import { SliceProps } from "./slices/SliceProps";
 import HeroSlice from "./slices/HeroSlice";
 import MainContentSlice from "./slices/MainContentSlice";
 import MainMenuSlice from "./slices/MainMenuSlice";
+import HTML from "./slices/HTML";
 
 const slices: Record<string, ComponentType<SliceProps>> = {
   content: Content,
   hero: HeroSlice,
+  html: HTML,
   latest_blog_posts: LatestBlogPosts,
   main_content: MainContentSlice,
   main_menu: MainMenuSlice,

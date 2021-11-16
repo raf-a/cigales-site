@@ -6,6 +6,7 @@ import Image from "next/image";
 import { RichText } from "prismic-reactjs";
 import Cigales from "components/Cigales";
 import PrismicRichText from "components/PrismicRichText";
+import PrismicImage from "components/PrismicImage";
 
 const QuoteList: VFC<SliceProps> = ({ slice }) => (
   <Container>
@@ -14,11 +15,9 @@ const QuoteList: VFC<SliceProps> = ({ slice }) => (
       {slice.items.map((item: any, index: number) => (
         <div key={index} className="item">
           <div className="picture">
-            <Image
-              src={item.picture.url}
-              alt={item.picture.alt}
-              width="80"
-              height="80"
+            <PrismicImage
+              render={item.picture}
+              sizes="96px"
             />
           </div>
           <div className="author">

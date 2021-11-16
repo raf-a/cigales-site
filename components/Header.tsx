@@ -1,4 +1,4 @@
-import React, { HTMLProps, FC, useState, VFC, ReactNode } from "react";
+import React, { HTMLProps, FC, useState, VFC, ReactNode, forwardRef } from "react";
 import Link from "next/link";
 import { Document } from "@prismicio/client/types/documents";
 import { useLockBodyScroll } from "react-use";
@@ -36,24 +36,23 @@ const Logo = () => (
   </Link>
 );
 
-const MenuButton: FC<
-  {
-    caret?: boolean;
-    primary?: boolean;
-    hover?: boolean;
-  } & HTMLProps<HTMLAnchorElement>
-> = ({ caret, primary, hover, children, ...props }) => {
-  return (
-    <>
-      <a {...props} className={classNames(props.className, { hover })}>
-        {children}
-        {caret && (
-          <div className="caret">
-            <FiChevronDown />
-          </div>
-        )}
-      </a>
-      <style jsx>{`
+type MenuButtonProps=  {
+  caret?: boolean;
+  primary?: boolean;
+  hover?: boolean;
+} & HTMLProps<HTMLAnchorElement>;
+
+const MenuButton = forwardRef<HTMLAnchorElement, MenuButtonProps>(({ caret, primary, hover, children, ...props }, ref ) => (
+  <>
+    <a ref={ref} {...props} className={classNames(props.className, { hover })}>
+      {children}
+      {caret && (
+        <div className="caret">
+          <FiChevronDown />
+        </div>
+      )}
+    </a>
+    <style jsx>{`
         a {
           display: inline-block;
           margin-left: auto;
@@ -69,8 +68,8 @@ const MenuButton: FC<
         a.hover {
           text-decoration: none;
           background-color: ${primary
-            ? "var(--color-text2)"
-            : "var(--color-bg2)"};
+        ? "var(--color-text2)"
+        : "var(--color-bg2)"};
           color: ${primary ? "var(--color-bg)" : "var(--color-primary)"};
         }
         .caret {
@@ -81,9 +80,9 @@ const MenuButton: FC<
           line-height: 0;
         }
       `}</style>
-    </>
-  );
-};
+  </>
+));
+MenuButton.displayName= 'MenuButton';
 
 const MegaMenu: FC<{ button: ReactNode }> = ({ button, children }) => {
   const [open, setOpen] = useState(false);

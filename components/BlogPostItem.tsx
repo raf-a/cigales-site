@@ -11,7 +11,7 @@ export type BlogPostItemProps = {
 };
 
 const BlogPostItem: VFC<BlogPostItemProps> = ({ blogPost }) => {
-  const image = <PrismicImage render={blogPost.data.image} />;
+  const image = <PrismicImage render={blogPost.data.image} sizes="320px" />;
   const title = RichText.asText(blogPost.data.title);
   const chapo = RichText.asText(blogPost.data.chapo);
   const href = linkResolver(blogPost);

@@ -8,7 +8,7 @@ const HeroSlice: VFC<SliceProps> = ({ slice }) => (
   <Hero
     title={RichText.asText(slice.primary.title)}
     subtitle={RichText.asText(slice.primary.subtitle)}
-    image={<PrismicImage render={slice.primary.hero_image} />}
+    image={<PrismicImage render={slice.primary.hero_image} sizes="540px" />}
   />
 );
 

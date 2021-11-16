@@ -10,7 +10,7 @@ const MainContentSlice: VFC<SliceProps> = ({ slice }) => (
   <MainContent
     image={
       <>
-        <PrismicImage render={slice.primary.image} />
+        <PrismicImage render={slice.primary.image} sizes="540px" />
         <Cigales name={slice.primary.image_club} />
       </>
     }

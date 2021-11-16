@@ -31,7 +31,7 @@ const BlogPost: VFC<BlogPostType> = ({ homepageDoc, blogPostDoc }) => (
           <PrismicRichText render={blogPostDoc.data.body} />
         </>
       }
-      image={<PrismicImage render={blogPostDoc.data.image} />}
+      image={<PrismicImage render={blogPostDoc.data.image} sizes="540px" />}
     />
     <style jsx>{`
       .chapo {

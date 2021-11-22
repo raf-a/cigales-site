@@ -60,7 +60,7 @@ export const getStaticProps: GetStaticProps<BlogIndexProps> = async ({
 
   const blogPosts = await client.query(
     Prismic.Predicates.at("document.type", "blog_post"),
-    { orderings: "[document.first_publication_date]", pageSize: 15 }
+    { orderings: "[document.first_publication_date desc]", pageSize: 15 }
   );
 
   return {

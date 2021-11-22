@@ -84,7 +84,7 @@ export const getByUID = async (
 
 export const getLatestBlogPosts = async (pageSize = 15) =>
   await client.query(Prismic.Predicates.at("document.type", "blog_post"), {
-    orderings: "[document.first_publication_date]",
+    orderings: "[document.first_publication_date desc]",
     pageSize,
   });
 

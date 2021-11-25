@@ -1,14 +1,6 @@
-import { RichText } from "prismic-reactjs";
 import React, { ComponentType, VFC } from "react";
-import { getLinkUrl } from "utils/prismic";
-import Cigales from "./Cigales";
-import PrismicImage from "./PrismicImage";
-import PrismicRichText from "./PrismicRichText";
 import Content from "./slices/Content";
-import Hero from "./Hero";
 import LatestBlogPosts from "./slices/LatestBlogPosts";
-import MainContent from "./slices/MainContentSlice";
-import MainMenu from "./MainMenu";
 import Numbers from "./slices/Numbers";
 import QuoteList from "./slices/QuoteList";
 import { SliceProps } from "./slices/SliceProps";
@@ -27,6 +19,17 @@ const slices: Record<string, ComponentType<SliceProps>> = {
   numbers: Numbers,
   quote_list: QuoteList,
 };
+
+export const getMainImage = (sliceZone: any[]): string | undefined => {
+  for (const slice of sliceZone) {
+    if (slice.slice_type === 'hero') {
+      return slice.primary.hero_image.url;
+    }
+    if (slice.slice_type === 'main_content') {
+      return slice.primary.image.url;
+    }
+  }
+}
 
 const SliceZone: VFC<{ sliceZone: any }> = ({ sliceZone }) => {
   return (
@@ -54,3 +57,4 @@ const SliceZone: VFC<{ sliceZone: any }> = ({ sliceZone }) => {
 };
 
 export default SliceZone;
+

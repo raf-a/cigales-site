@@ -38,6 +38,7 @@ export const hrefResolver = (doc: Document) => {
   return "/";
 };
 
+
 const client = Prismic.client(apiEndpoint);
 
 export const createClient = (req: any = null) =>

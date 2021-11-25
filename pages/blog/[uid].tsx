@@ -4,7 +4,6 @@ import React, { VFC } from "react";
 import { createClient } from "utils/prismic";
 import Prismic from "@prismicio/client";
 import Layout from "components/Layout";
-import Container from "components/Container";
 import { RichText } from "prismic-reactjs";
 import PageHeader from "components/PageHeader";
 import PrismicImage from "components/PrismicImage";
@@ -22,6 +21,7 @@ const BlogPost: VFC<BlogPostType> = ({ homepageDoc, blogPostDoc }) => (
       title={RichText.asText(blogPostDoc.data.title)}
       description={RichText.asText(blogPostDoc.data.chapo)}
       siteName={RichText.asText(homepageDoc.data.site_name)}
+      image={blogPostDoc.data.image.url}
     />
     <PageHeader
       title={RichText.asText(blogPostDoc.data.title)}

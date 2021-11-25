@@ -4,7 +4,7 @@ import { createClient, getByUID, getHomepage } from "utils/prismic";
 import Prismic from "@prismicio/client";
 import { Document } from "@prismicio/client/types/documents";
 import Layout from "components/Layout";
-import SliceZone from "components/SlizeZone";
+import SliceZone, { getMainImage } from "components/SlizeZone";
 import { RichText } from "prismic-reactjs";
 import SEO from "components/SEO";
 
@@ -23,6 +23,7 @@ const Page: NextPage<PageProps> = ({ pageDoc, homepageDoc }) => (
       title={RichText.asText(pageDoc.data.meta_title)}
       description={RichText.asText(pageDoc.data.meta_description)}
       siteName={RichText.asText(homepageDoc.data.site_name)}
+      image={getMainImage(pageDoc.data.body) || getMainImage(homepageDoc.data.body)}
     />
     <SliceZone sliceZone={pageDoc.data.body} />
   </Layout>

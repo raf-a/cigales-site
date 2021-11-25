@@ -9,8 +9,6 @@ import Container from "components/Container";
 import PrismicRichText from "components/PrismicRichText";
 import { RichText } from "prismic-reactjs";
 import PageHeader from "components/PageHeader";
-import BlogPostItem from "components/BlogPostItem";
-import PrismicImage from "components/PrismicImage";
 import SEO from "components/SEO";
 import BlogPostList from "components/BlogPostList";
 
